@@ -1,0 +1,51 @@
+:root {
+  --ifm-color-primary: #2962ff;
+  --ifm-color-primary-dark: #0f4eff;
+  --ifm-color-primary-darker: #0043ff;
+  --ifm-color-primary-darkest: #0037d2;
+  --ifm-color-primary-light: #4376ff;
+  --ifm-color-primary-lighter: #5180ff;
+  --ifm-color-primary-lightest: #789dff;
+  --ifm-code-font-size: 95%;
+}
+
+[data-theme='dark'] {
+  --ifm-color-primary: #4d7cff;
+  --ifm-background-color: #131722;
+  --ifm-background-surface-color: #1e222d;
+  --ifm-navbar-background-color: #1e222d;
+  --ifm-footer-background-color: #131722;
+}
+
+/* Polished presentation for workstation screenshots */
+.markdown img {
+  display: block;
+  margin: 1.25rem auto;
+  border-radius: 8px;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.28);
+  max-width: 100%;
+  height: auto;
+}
+
+/* Crisp keyboard shortcut keycaps */
+.markdown kbd {
+  background-color: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 4px;
+  box-shadow: inset 0 -1px 0 var(--ifm-color-emphasis-300);
+  font-size: 0.85em;
+  padding: 0.15rem 0.4rem;
+}
+
+/* Center and frame Mermaid diagrams cleanly */
+.docusaurus-mermaid-container {
+  display: flex;
+  justify-content: center;
+  margin: 1.25rem 0;
+  padding: 1rem;
+  border-radius: 8px;
+  background-color: var(--ifm-background-surface-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  overflow-x: auto;
+}

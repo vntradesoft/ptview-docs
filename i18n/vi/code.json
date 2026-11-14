@@ -1,0 +1,31 @@
+{
+  "theme.docs.sidebar.categoryTitle.Getting Started": {
+    "message": "Bắt Đầu & Hệ Sinh Thái",
+    "description": "The label for category Getting Started in sidebar mainSidebar"
+  },
+  "theme.docs.sidebar.categoryTitle.Workstation App Guide": {
+    "message": "Hướng Dẫn Người Dùng PTView App",
+    "description": "The label for category Workstation App Guide in sidebar mainSidebar"
+  },
+  "theme.docs.sidebar.categoryTitle.PTView.SDK Developer Guide": {
+    "message": "Hướng Dẫn Lập Trình PTView.SDK",
+    "description": "The label for category PTView.SDK Developer Guide in sidebar mainSidebar"
+  },
+  "theme.navbar.title": {
+    "message": "PTView Tài Liệu",
+    "description": "The title in the navbar"
+  },
+  "theme.navbar.item.label.Documentation": {
+    "message": "Tài Liệu",
+    "description": "Navbar item with label Documentation"
+  },
+  "theme.navbar.item.label.Download Installer": {
+    "message": "Tải Bộ Cài Đặt",
+    "description": "Navbar item with label Download Installer"
+  },
+  "theme.navbar.item.label.PTView.SDK": {
+    "message": "Mã Nguồn PTView.SDK",
+    "description": "Navbar item with label PTView.SDK"
+  }
+}
+
