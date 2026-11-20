@@ -1,0 +1,91 @@
+name: Deploy Docusaurus to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+    inputs:
+      docs_paused:
+        description: "Override maintenance mode (auto uses repository DOCS_PAUSED env)"
+        required: false
+        default: "auto"
+        type: choice
+        options:
+          - auto
+          - "true"
+          - "false"
+
+env:
+  # Toggle to "false" (or run scripts/set-maintenance.ps1 -Docs:$false) to restore normal Docusaurus build.
+  DOCS_PAUSED: "false"
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Build Docusaurus Site
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Resolve maintenance mode
+        id: mode
+        shell: bash
+        run: |
+          if [ "${{ github.event_name }}" = "workflow_dispatch" ] && [ "${{ inputs.docs_paused }}" != "auto" ]; then
+            echo "paused=${{ inputs.docs_paused }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "paused=${DOCS_PAUSED}" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Assemble maintenance site
+        if: steps.mode.outputs.paused == 'true'
+        shell: bash
+        run: |
+          rm -rf build
+          mkdir -p build/img
+          cp maintenance/index.html build/index.html
+          cp maintenance/index.html build/404.html
+          cp maintenance/robots.txt build/robots.txt
+          cp static/CNAME build/CNAME
+          if [ -f static/img/favicon.ico ]; then
+            cp static/img/favicon.ico build/img/favicon.ico
+          fi
+          touch build/.nojekyll
+
+      - name: Setup Node.js
+        if: steps.mode.outputs.paused != 'true'
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies and build Docusaurus
+        if: steps.mode.outputs.paused != 'true'
+        run: |
+          npm install
+          npm run build
+
+      - name: Upload Build Artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: build
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
